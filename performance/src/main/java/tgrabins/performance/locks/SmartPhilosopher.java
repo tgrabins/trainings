@@ -5,13 +5,15 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class SmartPhilosopher implements Runnable {
 
-        // The forks on either side of this Philosopher
+    private final int name;
+    // The forks on either side of this Philosopher
         private ReentrantLock leftFork;
         private ReentrantLock rightFork;
 
-        public SmartPhilosopher(ReentrantLock leftFork, ReentrantLock rightFork) {
+        public SmartPhilosopher(int name, ReentrantLock leftFork, ReentrantLock rightFork) {
             this.leftFork = leftFork;
             this.rightFork = rightFork;
+            this.name = name;
         }
 
         private void doAction(String action) throws InterruptedException {
@@ -20,7 +22,11 @@ public class SmartPhilosopher implements Runnable {
             Thread.sleep(((int) (Math.random() * 100)));
         }
 
-        public void run() {
+    public int getName() {
+        return name;
+    }
+
+    public void run() {
             try {
                 while (true) {
 
@@ -30,6 +36,7 @@ public class SmartPhilosopher implements Runnable {
                         doAction(
                                 System.nanoTime()
                                         + ": Picked up left fork");
+                        Thread.sleep(100);
                         if(rightFork.tryLock(100, TimeUnit.MILLISECONDS)){
                             // eating
                             doAction(
@@ -58,7 +65,6 @@ public class SmartPhilosopher implements Runnable {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                return;
             }
         }
 

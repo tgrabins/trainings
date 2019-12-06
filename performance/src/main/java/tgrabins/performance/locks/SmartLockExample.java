@@ -12,9 +12,9 @@ public class SmartLockExample {
         //SmartPhilosopher[] philosophers = new SmartPhilosopher[5];
 
         IntStream.range(0,5).boxed()
-                .map(i->new SmartPhilosopher(forks[i],forks[(i + 1) % forks.length]))
-                .map(p->new Thread(p, "Philosopher "))
-                .forEach(t->t.start());
+                .map(i->new SmartPhilosopher(i,forks[i],forks[(i + 1) % forks.length]))
+                .map(p->new Thread(p, "Philosopher " + p.getName()))
+                .forEach(Thread::start);
 
     }
 }
