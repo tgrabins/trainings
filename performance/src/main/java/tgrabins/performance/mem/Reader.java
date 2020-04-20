@@ -19,6 +19,7 @@ public class Reader implements Runnable {
     public void run() {
         while (true){
             var tmpArray = new ArrayList<LocalDateTime>(100);
+
             communicator.drainTo(tmpArray,100);
             tmpArray.forEach(d-> {
                 String formatted = String.format("Communicate received %s", d);

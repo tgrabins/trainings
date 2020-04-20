@@ -39,8 +39,8 @@ public class Producer implements Runnable {
     public static void main(String[] args) {
         var communicator = new ArrayBlockingQueue<LocalDateTime>(500);
 
-        var p = new Producer(communicator, true);
-        var r = new Reader(communicator, false);
+        var p = new Producer(communicator, false);
+        var r = new Reader(communicator, true);
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.submit(p);

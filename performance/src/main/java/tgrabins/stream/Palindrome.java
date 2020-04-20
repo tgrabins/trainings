@@ -12,10 +12,24 @@ public class Palindrome {
     }
 
     public boolean palindrome(String s) {
-        String s1 = s.replaceAll("\\s+", "").toLowerCase();
+        if (s == null ){
+            throw new IllegalArgumentException("null argument");
+        }
+        String s1 = s
+                .chars()
+                .filter(Character::isLetter)
+                .map(Character::toLowerCase)
+                .mapToObj(c->String.valueOf((char)c))
+                .collect(Collectors.joining());
+
+        if (s1.isEmpty()){
+            throw new IllegalArgumentException("Empty String after conversion");
+        }
+
         String s2 = new StringBuilder(s1).reverse().toString();
         System.out.println(s1);
         System.out.println(s2);
+
 
         return s1.equals(s2);
     }
